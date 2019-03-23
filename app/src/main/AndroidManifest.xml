@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.asus.digi_club">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/clubicon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/clubicon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SignIn" />
+        <activity
+            android:name=".Navdrawer"
+            android:label="Home" />
+        <activity android:name=".MenuManagement" />
+        <activity android:name=".BillManagement" />
+        <activity android:name=".AllMembers" />
+        <activity android:name=".Profile" />
+        <activity android:name=".Branches" />
+        <activity
+            android:name=".SignUp"
+            android:theme="@style/Splash"></activity>
+        <activity android:name=".FoodManagement"></activity>
+    </application>
+
+</manifest>
