@@ -7,5 +7,7 @@ public class Constraints {
     public static  final String SIGNINURL=BASEURL+"signin.php";
     public static  final String MEMBERURL=BASEURL+"member.php";
     public static  final String MEMBERINFOURL=BASEURL+"memberinfo.php";
+    public static  final String GETFOODITEMS=BASEURL+"GetFoodItemInfo.php";
+    public static  final String ADDFOODITEM=BASEURL+"AddFoodItem.php";
 
 }

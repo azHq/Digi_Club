@@ -27,14 +27,18 @@
         <activity
             android:name=".Navdrawer"
             android:label="Home" />
-        <activity android:name=".MenuManagement" />
+        <activity
+            android:theme="@style/AppTheme3"
+            android:label="Food Menu"
+            android:name=".MenuManagement" />
         <activity android:name=".BillManagement" />
         <activity android:name=".AllMembers" />
         <activity android:name=".Profile" />
         <activity android:name=".Branches" />
         <activity
             android:name=".SignUp"
-            android:theme="@style/Splash"></activity>
+            android:theme="@style/Splash">
+        </activity>
         <activity android:name=".FoodManagement"></activity>
     </application>
 

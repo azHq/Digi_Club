@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,237 +7,28 @@
     android:orientation="vertical"
     tools:context=".MenuManagement">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.Toolbar
-
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:background="#0e078d"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/appbar"
+        android:id="@+id/recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="190dp">
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="6dp"
+        android:background="@drawable/signupbutton"
+        android:backgroundTint="#b71313"
+        android:fontFamily="sans-serif"
+        android:onClick="delete"
+        android:text="Delete Account"
+        android:textColor="#faf8f8"
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="30dp"
-                        android:src="@drawable/food1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="30dp"
-                        android:src="@drawable/egg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="190dp">
-
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="30dp"
-                        android:src="@drawable/juice"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1.5"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="30dp"
-                        android:src="@drawable/juice2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="190dp">
-
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="30dp"
-                        android:src="@drawable/burger"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="30dp"
-                        android:src="@drawable/egg2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="190dp">
-
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="30dp"
-                        android:src="@drawable/pizza"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1.5"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="20dp"
-                        android:src="@drawable/ice2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="190dp">
-
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="30dp"
-                        android:src="@drawable/tea"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_weight="1"
-                    android:layout_margin="16dp"
-                    android:elevation="10dp"
-                    app:cardElevation="15dp"
-                    app:cardCornerRadius="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_margin="30dp"
-                        android:src="@drawable/clabber2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-
-
-    </ScrollView>
-
-
-
-
-
-</LinearLayout>
+</RelativeLayout>
