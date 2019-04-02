@@ -30,10 +30,10 @@ public class DatabaseConnector {
     }
 
 
-    public  void deleteMember(final String id){
+    public  void deleteMember(final String id,String URL){
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.MEMBERURL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

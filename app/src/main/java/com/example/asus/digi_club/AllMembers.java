@@ -67,7 +67,7 @@ public class AllMembers extends AppCompatActivity {
         for(String i:deleteItem){
 
             DatabaseConnector databaseConnector=new DatabaseConnector(getApplicationContext());
-            databaseConnector.deleteMember(i);
+            databaseConnector.deleteMember(i,Constraints.MEMBERURL);
         }
         delete.setVisibility(View.INVISIBLE);
         itemdelete=false;

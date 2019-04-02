@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -70,7 +71,7 @@ public class MenuManagement extends AppCompatActivity {
         for(String i:deleteItem){
 
             DatabaseConnector databaseConnector=new DatabaseConnector(getApplicationContext());
-            databaseConnector.deleteMember(i);
+            databaseConnector.deleteMember(i,Constraints.ADDFOODITEM);
         }
         delete.setVisibility(View.INVISIBLE);
         itemdelete=false;
@@ -87,6 +88,7 @@ public class MenuManagement extends AppCompatActivity {
         public  class ViewAdapter extends RecyclerView.ViewHolder{
 
             View mView;
+            CardView cardView;
             TextView name,price,name2,price2;
             CircleImageView profile_image,profile_image2;
             CheckBox checkBox1,checkBox2;
@@ -101,6 +103,7 @@ public class MenuManagement extends AppCompatActivity {
                 price2=mView.findViewById(R.id.price2);
                 profile_image=mView.findViewById(R.id.profile_image);
                 profile_image2=mView.findViewById(R.id.profile_image2);
+                cardView=mView.findViewById(R.id.card2);
 
             }
 
@@ -134,14 +137,14 @@ public class MenuManagement extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    deleteItem.add(memberInfo[0].id+"");
+                    deleteItem.add((memberInfo[0].id+1)+"");
                     delete.setVisibility(View.VISIBLE);
                 }
             });
 
 
             if(memberInfo[1]!=null){
-
+                holder.cardView.setVisibility(View.VISIBLE);
                 if(memberInfo[1].getImagepath()==null) holder.profile_image2.setImageResource(R.drawable.azaz12);
                 else{
                     holder.profile_image2.setImageResource(R.drawable.burger);
@@ -152,7 +155,7 @@ public class MenuManagement extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        deleteItem.add(memberInfo[1].id+"");
+                        deleteItem.add((memberInfo[1].id+1)+"");
                         delete.setVisibility(View.VISIBLE);
                     }
                 });
@@ -165,7 +168,6 @@ public class MenuManagement extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-
 
             return foodItemInfo.size();
         }
@@ -287,10 +289,9 @@ public class MenuManagement extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
 
                         ArrayList<FoodItemInfo[]> foodItemInfo=new ArrayList<>();
-                        FoodItemInfo[] foodItem=new FoodItemInfo[2];
+
                         for(int i=0;i<response.length();i++){
-
-
+                            FoodItemInfo[] foodItem=new FoodItemInfo[2];
                             JSONObject student = null;
                             try {
                                 student = response.getJSONObject(i);
@@ -299,6 +300,7 @@ public class MenuManagement extends AppCompatActivity {
                                 double price = student.getDouble("price");
                                 String path = student.getString("imagepath");
                                 foodItem[0]=new FoodItemInfo(id,name,price,path);
+
                                 i++;
                                 if(i<response.length()){
                                     student = response.getJSONObject(i);
@@ -308,7 +310,9 @@ public class MenuManagement extends AppCompatActivity {
                                     path = student.getString("imagepath");
                                     foodItem[1]=new FoodItemInfo(id,name,price,path);
 
+
                                 }
+
                                 foodItemInfo.add(foodItem);
 
 
@@ -316,6 +320,8 @@ public class MenuManagement extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
+
+
                         RecycleAdapter recycleAdapter=new RecycleAdapter(foodItemInfo);
                         recyclerView=findViewById(R.id.recycle);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
