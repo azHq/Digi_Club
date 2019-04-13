@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,8 +32,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.Message.RecipientType;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.SendFailedException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -252,11 +265,11 @@ public class BillManagement extends AppCompatActivity {
 
     }
 
-    public void generateBill(View view){
+    public void generateBill(View view)  {
 
         double totalBill=0.0;
         StringBuilder s=new StringBuilder();
-        s.append("Food        Price\n");
+        s.append("Food        Price\n\n");
         for(int key:selectedItem.keySet()){
 
             totalBill+=(selectedItem.get(key)*Double.parseDouble(foods.get(key).price));
@@ -289,9 +302,12 @@ public class BillManagement extends AppCompatActivity {
 
     }
 
-    private void sendMail(String billpaper) {
+    private void sendMail(String billpaper)  {
 
-        Intent i = new Intent(Intent.ACTION_SEND);
+
+        SendMail sm = new SendMail(this,"bsse0923@iit.du.ac.bd","Your Bill", billpaper);
+        sm.execute();
+       /* Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"bsse0923@iit.du.ac.bd"});
         i.putExtra(Intent.EXTRA_SUBJECT, "Your Bill");
@@ -300,8 +316,20 @@ public class BillManagement extends AppCompatActivity {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(BillManagement.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
-        Toast.makeText(BillManagement.this, "Email have sent successfully.", Toast.LENGTH_SHORT).show();
+       /* BackgroundMail bm = new BackgroundMail(getApplicationContext());
+        bm.setGmailUserName("monir230chowdhury@gmail.com");
+        bm.setGmailPassword("00000923");
+        bm.setMailTo("bsse0923@iit.du.ac.bd");
+        bm.setFormSubject("Your Bill");
+        bm.setFormBody(billpaper);
+        bm.send();*/
+
+
+
+
     }
+
+
 }
