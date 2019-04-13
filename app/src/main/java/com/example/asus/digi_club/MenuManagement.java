@@ -72,6 +72,8 @@ public class MenuManagement extends AppCompatActivity {
 
             DatabaseConnector databaseConnector=new DatabaseConnector(getApplicationContext());
             databaseConnector.deleteMember(i,Constraints.ADDFOODITEM);
+
+
         }
         delete.setVisibility(View.INVISIBLE);
         itemdelete=false;
@@ -124,7 +126,7 @@ public class MenuManagement extends AppCompatActivity {
 
             if(itemdelete){
                 holder.checkBox1.setVisibility(View.VISIBLE);
-                holder.checkBox2.setVisibility(View.VISIBLE);
+
             }
             if(memberInfo[0].getImagepath()==null) holder.profile_image.setImageResource(R.drawable.azaz12);
             else{
@@ -137,13 +139,17 @@ public class MenuManagement extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    deleteItem.add((memberInfo[0].id+1)+"");
+                    deleteItem.add((memberInfo[0].id)+"");
                     delete.setVisibility(View.VISIBLE);
                 }
             });
 
 
             if(memberInfo[1]!=null){
+                if(itemdelete){
+
+                    holder.checkBox2.setVisibility(View.VISIBLE);
+                }
                 holder.cardView.setVisibility(View.VISIBLE);
                 if(memberInfo[1].getImagepath()==null) holder.profile_image2.setImageResource(R.drawable.azaz12);
                 else{
@@ -155,7 +161,7 @@ public class MenuManagement extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        deleteItem.add((memberInfo[1].id+1)+"");
+                        deleteItem.add((memberInfo[1].id)+"");
                         delete.setVisibility(View.VISIBLE);
                     }
                 });
@@ -211,9 +217,9 @@ public class MenuManagement extends AppCompatActivity {
     public void addMember(){
 
         AlertDialog.Builder builder=new AlertDialog.Builder(MenuManagement.this);
-        View view=getLayoutInflater().inflate(R.layout.addmemberview,null);
-        final EditText name=view.findViewById(R.id.memberName);
-        final EditText dept=view.findViewById(R.id.deptName);
+        View view=getLayoutInflater().inflate(R.layout.addfooditem,null);
+        final EditText name=view.findViewById(R.id.foodname);
+        final EditText dept=view.findViewById(R.id.price);
         Button addmember=view.findViewById(R.id.addmember);
         builder.setView(view);
         final Dialog dialog=builder.show();
@@ -244,13 +250,13 @@ public class MenuManagement extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(),"Member added successfully",Toast.LENGTH_LONG).show();
 
-
+                            getAllMemberData();
                         } else {
 
                             Toast.makeText(getApplicationContext(),"Fail to add member",Toast.LENGTH_LONG).show();
 
                         }
-                        getAllMemberData();
+
                     }
                 },
                 new Response.ErrorListener() {

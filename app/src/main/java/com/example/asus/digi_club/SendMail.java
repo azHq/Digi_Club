@@ -63,13 +63,13 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
                 new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("bsse0923@iit.du.ac.bd","100100100azaz");
+                        return new PasswordAuthentication("monir230chowdhury@gmail.com","00000923");
                     }
                 });
         try {
 
             MimeMessage mm = new MimeMessage(session);
-            mm.setFrom(new InternetAddress("bsse0923@iit.du.ac.bd"));
+            mm.setFrom(new InternetAddress("monir230chowdhury@gmail.com"));
             mm.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             mm.setSubject(subject);
             mm.setText(message);

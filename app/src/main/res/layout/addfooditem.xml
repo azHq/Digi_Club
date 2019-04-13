@@ -27,7 +27,7 @@
                 android:text="Food Name"
                 android:textStyle="bold" />
             <EditText
-                android:id="@+id/memberName"
+                android:id="@+id/foodname"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
                 android:layout_marginEnd="6dp"
@@ -47,7 +47,7 @@
                 android:text="Price"
                 android:textStyle="bold" />
             <EditText
-                android:id="@+id/deptName"
+                android:id="@+id/price"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_marginEnd="6dp"
