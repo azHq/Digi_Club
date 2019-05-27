@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@drawable/back3"
+    android:orientation="vertical"
+    tools:context=".Admin.Member_Management.MemberType_Selector">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/button_back1"
+        android:fontFamily="serif"
+        android:onClick="Sub_Admin"
+        android:text="Sub_Admin"
+        android:textColor="#dbad08"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_back1"
+        android:elevation="0dp"
+        android:fontFamily="serif"
+        android:onClick="User"
+        android:text="All_Users"
+        android:textColor="#aece09"
+        android:textStyle="bold" />
+
+</LinearLayout>

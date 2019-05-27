@@ -1,13 +1,11 @@
-package com.example.asus.digi_club;
+package com.example.asus.digi_club.Admin.Bill_Management;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,31 +20,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.asus.digi_club.Admin.Food_Managemnet.Food;
+import com.example.asus.digi_club.Constraints;
+import com.example.asus.digi_club.MemberInfo;
+import com.example.asus.digi_club.R;
+import com.example.asus.digi_club.SendMail;
+import com.example.asus.digi_club.SharedPrefManager;
+import com.example.asus.digi_club.User;
+import com.example.asus.digi_club.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.Message.RecipientType;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.SendFailedException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -59,52 +54,30 @@ public class BillManagement extends AppCompatActivity {
     Map<Integer,Integer> selectedItem=new HashMap<>();
     Button delete;
     boolean itemdelete=false;
-    ArrayList<Food> foods=new ArrayList<>();
+    ArrayList<Food> memberInfos;
     Button confirmbill;
-
+    SharedPrefManager sharedPrefManager;
+    User user;
+    String user_id,admin_id;
+    double totalBill=0.0;
+    String description="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_management);
-        toolbar=findViewById(R.id.toolbar);
+        recyclerView=findViewById(R.id.recycle);
+        user_id=getIntent().getStringExtra("id");
+        sharedPrefManager= SharedPrefManager.getInstance(getApplicationContext());
+        user=sharedPrefManager.getUser();
+        admin_id=user.getId();
+
         confirmbill=findViewById(R.id.confirmbill);
-        toolbar.setTitle("Generate Bill");
         progressDialog=new ProgressDialog(BillManagement.this);
         progressDialog.setMessage("Please wait...");
-        setData();
-        RecycleAdapter recycleAdapter=new RecycleAdapter(foods);
-        recyclerView=findViewById(R.id.recycle);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(recycleAdapter);
+        getAllMemberData();
 
     }
 
-    private void setData() {
-
-        for(int i=0;i<5;i++){
-
-            if(i==0){
-
-                foods.add(new Food(i+"","pizza","250","3","pizza"));
-            }
-            else if(i==1){
-
-                foods.add(new Food(i+"","burger","200","5","burger"));
-            }
-            else if(i==2){
-
-                foods.add(new Food(i+"","clabber","100","5","clabber"));
-            }
-            else if(i==3){
-
-                foods.add(new Food(i+"","egg","100","5","egg"));
-            }
-            else if(i==4){
-
-                foods.add(new Food(i+"","juice","100","5","juice"));
-            }
-        }
-    }
 
     public void getAllMemberData(){
 
@@ -112,34 +85,35 @@ public class BillManagement extends AppCompatActivity {
         progressDialog.show();
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
                 Request.Method.POST,
-                Constraints.MEMBERINFOURL,
+                Constraints.GETFOODITEMS,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        ArrayList<MemberInfo> memberInfos=new ArrayList<>();
-                        memberInfos.add(new MemberInfo("234","Md.Saeed Siddik",null,"IIT","image"));
-                        memberInfos.add(new MemberInfo("234","Nadia Nahar",null,"IIT",null));
+                        memberInfos=new ArrayList<>();
                         for(int i=0;i<response.length();i++){
 
                             JSONObject student = null;
                             try {
+
+
                                 student = response.getJSONObject(i);
-                                String id = student.getString("id");
-                                String name = student.getString("name");
-                                String dept = student.getString("department");
-                                memberInfos.add(new MemberInfo(id,name,null,dept,null));
+                                String foodId = student.getString("id");
+                                String foodName = student.getString("name");
+                                String price = student.getString("price");
+                                String quantity= student.getString("quantity");
+                                String picturePath=student.getString("imagepath");
+                                memberInfos.add(new Food(foodId,foodName,price,quantity,picturePath));
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-                        /*RecycleAdapter recycleAdapter=new RecycleAdapter(memberInfos);
-                        recyclerView=findViewById(R.id.recycle);
+                        RecycleAdapter recycleAdapter=new RecycleAdapter(memberInfos);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerView.setAdapter(recycleAdapter);
-                        progressDialog.dismiss();*/
+                        progressDialog.dismiss();
 
                     }
                 },
@@ -268,38 +242,87 @@ public class BillManagement extends AppCompatActivity {
 
     public void generateBill(View view)  {
 
-        double totalBill=0.0;
+
         StringBuilder s=new StringBuilder();
-        s.append("Food        Price\n\n");
+        s.append("Food   quantity     Price\n\n");
         for(int key:selectedItem.keySet()){
 
-            totalBill+=(selectedItem.get(key)*Double.parseDouble(foods.get(key).price));
-            double everyItemBill=(selectedItem.get(key)*Double.parseDouble(foods.get(key).price));
-            s.append(foods.get(key).foodName+"       "+everyItemBill+"\n");
+            totalBill+=(selectedItem.get(key)*Double.parseDouble(memberInfos.get(key).price));
+            double everyItemBill=(selectedItem.get(key)*Double.parseDouble(memberInfos.get(key).price));
+            s.append(memberInfos.get(key).foodName+"    "+selectedItem.get(key)+"     "+everyItemBill+"\n\n");
+            description+=memberInfos.get(key).foodId+"-"+memberInfos.get(key).foodName+"-"+memberInfos.get(key).price+"-"+selectedItem.get(key)+",";
+
         }
         confirmbill.setVisibility(View.INVISIBLE);
         selectedItem.remove(selectedItem);
 
         String billpaper="Total Bill: "+totalBill+"/="+"\n\n"+s.toString();
-
-        sendMail(billpaper);
         showLog(billpaper);
 
     }
 
-    private void showLog(String billpaper) {
+    private void showLog(final String billpaper) {
 
         AlertDialog.Builder builder=new AlertDialog.Builder(BillManagement.this);
         builder.setTitle("Your Bill");
         builder.setMessage(billpaper);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                addBill();
+                sendMail(billpaper);
 
                 dialog.dismiss();
             }
         });
         builder.show();
+
+    }
+
+    public void addBill(){
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.Transaction,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+
+
+                        if (response.contains("success")) {
+
+                            Toast.makeText(getApplicationContext(),"Bill Added Successfully",Toast.LENGTH_LONG).show();
+
+                        } else {
+
+                            Toast.makeText(getApplicationContext(),"Fail to add Bill",Toast.LENGTH_LONG).show();
+
+                        }
+                        getAllMemberData();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(getApplicationContext(),"Fail to add Bill",Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("type","add");
+                params.put("user_id", user_id);
+                params.put("admin_id",admin_id);
+                params.put("total_bill",totalBill+"");
+                params.put("description",description);
+                return params;
+            }
+
+        };
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
     }
 

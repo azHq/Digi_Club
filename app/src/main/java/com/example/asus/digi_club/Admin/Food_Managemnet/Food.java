@@ -1,11 +1,11 @@
-package com.example.asus.digi_club;
+package com.example.asus.digi_club.Admin.Food_Managemnet;
 
 public class Food {
-    String foodId;
-    String foodName;
-    String price;
-    String quatiy;
-    String picturePath;
+    public String foodId;
+    public String foodName;
+    public String price;
+    public String quatiy;
+    public String picturePath;
 
 
     public Food(String foodId, String foodName, String price, String quatiy,String picturePath) {

@@ -55,7 +55,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/edittextback"
-            android:drawableLeft="@drawable/profile"
+            android:drawableLeft="@drawable/profile2"
             android:drawablePadding="6dp"
             android:textColorHint="@color/blue"
             android:drawableTint="@color/blue"

@@ -3,6 +3,7 @@ package com.example.asus.digi_club;
 public class User {
 
     private String id;
+    private String type;
     private String username, email, gender;
 
     public User(String id, String username, String email, String gender) {
@@ -26,5 +27,13 @@ public class User {
 
     public String getGender() {
         return gender;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

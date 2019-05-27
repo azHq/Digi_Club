@@ -10,7 +10,7 @@
         android:layout_margin="10dp"
         android:elevation="20dp"
         app:cardCornerRadius="12dp"
-        app:cardBackgroundColor="#f4f5f9f5"
+        app:cardBackgroundColor="#e084660d"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -66,10 +66,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:layout_weight="1"
-                    android:background="@drawable/profilebuttonback"
-                    android:text="View Profile"
+                    android:background="@drawable/profilebuttonback2"
+                    android:text="Add Bill"
                     android:textAllCaps="false"
-                    android:textColor="#4d4646"
+                    android:textColor="#faf8f7"
                     android:textSize="12sp" />
 
                 <Button
@@ -79,24 +79,16 @@
                     android:layout_margin="6dp"
                     android:layout_weight="1"
                     android:background="@drawable/profilebuttonback"
-                    android:text="Send Message"
+                    android:text="Bill History"
                     android:textAllCaps="false"
-                    android:textColor="#554646"
-                    android:textSize="11sp" />
+                    android:textColor="#dc713939"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
 
         </LinearLayout>
-
-        <CheckBox
-            android:id="@+id/seletor"
-            android:visibility="invisible"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:theme="@style/MyCheckbox"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/item" />
 
 
     </android.support.v7.widget.CardView>

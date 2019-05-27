@@ -28,18 +28,35 @@
             android:name=".Navdrawer"
             android:label="Home" />
         <activity
-            android:theme="@style/AppTheme3"
-            android:label="Food Menu"
-            android:name=".MenuManagement" />
-        <activity android:name=".BillManagement" />
-        <activity android:name=".AllMembers" />
+            android:name=".Admin.Bill_Management.BillManagement"
+            android:label="Bill Managemnet"
+            android:theme="@style/theme3" />
+        <activity
+            android:name=".Admin.Member_Management.AllMembers"
+            android:label="Member Management"
+            android:theme="@style/theme3" />
+        <activity
+            android:name=".Admin.Food_Managemnet.MenuManagement"
+            android:label="Food Managemnet"
+            android:theme="@style/theme3" />
         <activity android:name=".Profile" />
-        <activity android:name=".Branches" />
         <activity
             android:name=".SignUp"
-            android:theme="@style/Splash">
-        </activity>
-        <activity android:name=".FoodManagement"></activity>
+            android:theme="@style/Splash" />
+        <activity android:name=".TypeSelector" />
+        <activity
+            android:name=".Admin.Home"
+            android:label="Home"
+            android:theme="@style/theme3" />
+        <activity android:name=".Admin.Profile" />
+        <activity android:name=".Admin.Sub_Admin.Home" />
+        <activity android:name=".Admin.Member_Management.MemberType_Selector" />
+        <activity
+            android:name=".Admin.Sub_Admin.All_Sub_Admin"
+            android:label="Sub_Admin"
+            android:theme="@style/theme3" />
+        <activity android:name=".Admin.Bill_Management.User_Profiles"
+            android:theme="@style/theme3"/>
     </application>
 
 </manifest>

@@ -30,7 +30,7 @@ public class DatabaseConnector {
     }
 
 
-    public  void deleteMember(final String id,String URL){
+    public  void deleteMember(final String id, String URL, final String type){
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,URL,
@@ -40,12 +40,13 @@ public class DatabaseConnector {
 
                         if (response.contains("success")) {
 
-                            Toast.makeText(context,"Member terminated successfully",Toast.LENGTH_LONG).show();
-
+                            if(type.equals("update")) Toast.makeText(context,"Member updated successfully",Toast.LENGTH_LONG).show();
+                            else Toast.makeText(context,"Member removed successfully",Toast.LENGTH_LONG).show();
 
                         } else {
 
-                            Toast.makeText(context,"Fail to terminated member",Toast.LENGTH_LONG).show();
+                            if(type.equals("update")) Toast.makeText(context,"Fail to Update Member",Toast.LENGTH_LONG).show();
+                            else Toast.makeText(context,"Fail to Delete Member",Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -54,13 +55,13 @@ public class DatabaseConnector {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(context,"Fail to terminated member",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Fail to "+type,Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("type","delete");
+                params.put("type",type);
                 params.put("id", id);
                 return params;
             }

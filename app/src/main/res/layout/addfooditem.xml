@@ -26,16 +26,18 @@
                 android:gravity="center_vertical"
                 android:text="Food Name"
                 android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/foodname"
                 android:layout_width="match_parent"
-                android:gravity="center_vertical"
+                android:layout_height="40dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginStart="6dp"
-                android:paddingStart="6dp"
                 android:background="@drawable/edittextback"
+                android:gravity="center_vertical"
                 android:hint="Enter Food Name.."
-                android:layout_height="40dp" />
+                android:paddingStart="6dp"
+                android:textColor="#ea282323" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -46,16 +48,40 @@
                 android:gravity="center_vertical"
                 android:text="Price"
                 android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/price"
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginStart="6dp"
-                android:paddingStart="6dp"
                 android:background="@drawable/edittextback"
+                android:gravity="center_vertical"
                 android:hint="Enter Price.."
-                android:layout_height="40dp" />
+                android:paddingStart="6dp"
+                android:textColor="#494242" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="18dp"
+                android:gravity="center_vertical"
+                android:text="Quantity"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/quantity"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/edittextback"
+                android:gravity="center_vertical"
+                android:hint="Enter Quantity.."
+                android:paddingStart="6dp"
+                android:textColor="#494242" />
 
             <Button
                 android:id="@+id/addmember"

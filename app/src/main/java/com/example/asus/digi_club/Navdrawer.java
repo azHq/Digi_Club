@@ -14,6 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.asus.digi_club.Admin.Branch_Managemnet.Branches;
+import com.example.asus.digi_club.Admin.Food_Managemnet.MenuManagement;
+
 public class Navdrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

@@ -1,4 +1,4 @@
-package com.example.asus.digi_club;
+package com.example.asus.digi_club.Admin.Food_Managemnet;
 
 public class FoodItemInfo {
 
@@ -6,14 +6,16 @@ public class FoodItemInfo {
     public int id;
     public String name;
     public double price;
+    public int quantity;
 
-    public FoodItemInfo(int id, String name, double price,String imagepath) {
+
+    public FoodItemInfo(String imagepath, int id, String name, double price, int quantity) {
+        this.imagepath = imagepath;
         this.id = id;
         this.name = name;
         this.price = price;
-        this.imagepath = imagepath;
+        this.quantity = quantity;
     }
-
 
 
     public int getId() {
@@ -46,5 +48,13 @@ public class FoodItemInfo {
 
     public void setImagepath(String imagepath) {
         this.imagepath = imagepath;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

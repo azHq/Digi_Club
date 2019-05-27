@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 public class SharedPrefManager {
 
 
-    private static final String SHARED_PREF_NAME = "simplifiedcodingsharedpref";
+    private static final String SHARED_PREF_NAME = "USER_INFO";
     private static final String KEY_USERNAME = "keyusername";
     private static final String KEY_EMAIL = "keyemail";
     private static final String KEY_GENDER = "keygender";

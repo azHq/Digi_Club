@@ -1,12 +1,11 @@
-package com.example.asus.digi_club;
+package com.example.asus.digi_club.Admin.Member_Management;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +26,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.asus.digi_club.Admin.Food_Managemnet.MenuManagement;
+import com.example.asus.digi_club.Constraints;
+import com.example.asus.digi_club.DatabaseConnector;
+import com.example.asus.digi_club.R;
+import com.example.asus.digi_club.SendMail;
+import com.example.asus.digi_club.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +43,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MenuManagement extends AppCompatActivity {
+public class AllMembers extends AppCompatActivity {
 
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -46,34 +51,36 @@ public class MenuManagement extends AppCompatActivity {
     ArrayList<String> deleteItem=new ArrayList<>();
     Button delete;
     boolean itemdelete=false;
+    ArrayList<MemberInfo> memberInfos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_management);
-
+        setContentView(R.layout.activity_all_members);
         delete=findViewById(R.id.delete);
-        progressDialog=new ProgressDialog(MenuManagement.this);
+        recyclerView=findViewById(R.id.recycle);
+        progressDialog=new ProgressDialog(AllMembers.this);
         progressDialog.setMessage("Please wait...");
         getAllMemberData();
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void initRecycle(){
 
-        getMenuInflater().inflate(R.menu.foodmenu, menu);
-        return true;
+        RecycleAdapter recycleAdapter=new RecycleAdapter(memberInfos);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(recycleAdapter);
+        progressDialog.dismiss();
     }
+
 
     public void delete(View view){
 
-
+       
         for(String i:deleteItem){
 
             DatabaseConnector databaseConnector=new DatabaseConnector(getApplicationContext());
-            databaseConnector.deleteMember(i,Constraints.ADDFOODITEM);
-
-
+            databaseConnector.deleteMember(i,Constraints.MEMBERURL,"delete");
         }
         delete.setVisibility(View.INVISIBLE);
         itemdelete=false;
@@ -83,29 +90,27 @@ public class MenuManagement extends AppCompatActivity {
 
     public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewAdapter>{
 
-        ArrayList<FoodItemInfo[]> foodItemInfo;
-        public RecycleAdapter(ArrayList<FoodItemInfo[]> foodItemInfo){
-            this.foodItemInfo=foodItemInfo;
+        ArrayList<MemberInfo> memberInfos;
+        public RecycleAdapter(ArrayList<MemberInfo> memberInfos){
+            this.memberInfos=memberInfos;
         }
         public  class ViewAdapter extends RecyclerView.ViewHolder{
 
             View mView;
-            CardView cardView;
-            TextView name,price,name2,price2;
-            CircleImageView profile_image,profile_image2;
-            CheckBox checkBox1,checkBox2;
+            Button viewProfile,sendMessage;
+            TextView name,dptName;
+            CircleImageView profile_image;
+            CheckBox checkBox;
             public ViewAdapter(View itemView) {
                 super(itemView);
                 mView=itemView;
-                checkBox1=mView.findViewById(R.id.seletor1);
-                checkBox2=mView.findViewById(R.id.seletor2);
+                viewProfile=mView.findViewById(R.id.view_profile);
+                sendMessage=mView.findViewById(R.id.sendMessage);
+                checkBox=mView.findViewById(R.id.seletor);
+
                 name=mView.findViewById(R.id.name);
-                price=mView.findViewById(R.id.price);
-                name2=mView.findViewById(R.id.name2);
-                price2=mView.findViewById(R.id.price2);
+                dptName=mView.findViewById(R.id.dept);
                 profile_image=mView.findViewById(R.id.profile_image);
-                profile_image2=mView.findViewById(R.id.profile_image2);
-                cardView=mView.findViewById(R.id.card2);
 
             }
 
@@ -114,68 +119,39 @@ public class MenuManagement extends AppCompatActivity {
         @NonNull
         @Override
         public ViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.menuitem,parent,false);
+            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.allmemberitem,parent,false);
             return new ViewAdapter(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecycleAdapter.ViewAdapter holder, final int position) {
+        public void onBindViewHolder(@NonNull ViewAdapter holder, final int position) {
 
 
-            final FoodItemInfo[] memberInfo=foodItemInfo.get(position);
+            MemberInfo memberInfo=memberInfos.get(position);
 
-            if(itemdelete){
-                holder.checkBox1.setVisibility(View.VISIBLE);
-
-            }
-            if(memberInfo[0].getImagepath()==null) holder.profile_image.setImageResource(R.drawable.azaz12);
+            if(itemdelete) holder.checkBox.setVisibility(View.VISIBLE);
+            if(memberInfo.getImagePath()==null) holder.profile_image.setImageResource(R.drawable.profile2);
             else{
-                holder.profile_image.setImageResource(R.drawable.egg);
+                holder.profile_image.setImageResource(R.drawable.saeed_sir);
             }
-            holder.price.setText("Price:"+memberInfo[0].price+"TK");
-            holder.name.setText(memberInfo[0].name);
+            holder.dptName.setText(memberInfo.department);
+            holder.name.setText(memberInfo.name);
 
-            holder.checkBox1.setOnClickListener(new View.OnClickListener() {
+            holder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    deleteItem.add((memberInfo[0].id)+"");
+                    deleteItem.add(memberInfos.get(position).id);
                     delete.setVisibility(View.VISIBLE);
                 }
             });
-
-
-            if(memberInfo[1]!=null){
-                if(itemdelete){
-
-                    holder.checkBox2.setVisibility(View.VISIBLE);
-                }
-                holder.cardView.setVisibility(View.VISIBLE);
-                if(memberInfo[1].getImagepath()==null) holder.profile_image2.setImageResource(R.drawable.azaz12);
-                else{
-                    holder.profile_image2.setImageResource(R.drawable.burger);
-                }
-                holder.price2.setText("Price:"+memberInfo[1].price+"TK");
-                holder.name2.setText(memberInfo[1].name);
-                holder.checkBox2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        deleteItem.add((memberInfo[1].id)+"");
-                        delete.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-
-
 
 
         }
 
         @Override
         public int getItemCount() {
-
-            return foodItemInfo.size();
+            return memberInfos.size();
         }
 
 
@@ -192,6 +168,12 @@ public class MenuManagement extends AppCompatActivity {
         }*/
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.allmenbersmenu, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -206,8 +188,9 @@ public class MenuManagement extends AppCompatActivity {
         }
         if (id == R.id.terminate) {
 
-            itemdelete=true;
-            getAllMemberData();
+            if(itemdelete) itemdelete=false;
+            else itemdelete=true;
+            initRecycle();
             return true;
         }
 
@@ -216,10 +199,11 @@ public class MenuManagement extends AppCompatActivity {
 
     public void addMember(){
 
-        AlertDialog.Builder builder=new AlertDialog.Builder(MenuManagement.this);
-        View view=getLayoutInflater().inflate(R.layout.addfooditem,null);
-        final EditText name=view.findViewById(R.id.foodname);
-        final EditText dept=view.findViewById(R.id.price);
+        AlertDialog.Builder builder=new AlertDialog.Builder(AllMembers.this);
+        View view=getLayoutInflater().inflate(R.layout.addmemberview,null);
+        final EditText name=view.findViewById(R.id.memberName);
+        final EditText dept=view.findViewById(R.id.deptName);
+        final EditText dept_name=view.findViewById(R.id.dept);
         Button addmember=view.findViewById(R.id.addmember);
         builder.setView(view);
         final Dialog dialog=builder.show();
@@ -228,7 +212,16 @@ public class MenuManagement extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                addMember(name.getText().toString(),dept.getText().toString());
+                if(name.getText().toString().length()>2&&dept.getText().toString().length()>2&&dept_name.getText().toString().length()>2){
+                    addMember(name.getText().toString(),dept.getText().toString(),dept_name.getText().toString());
+
+                }
+                else{
+
+                    Toast.makeText(getApplicationContext(),"Please Enater Name and Email",Toast.LENGTH_LONG).show();
+                    addMember();
+                }
+
                 dialog.dismiss();
 
             }
@@ -236,10 +229,10 @@ public class MenuManagement extends AppCompatActivity {
 
     }
 
-    public  void addMember(final String memberName,final String dept){
+    public  void addMember(final String memberName,final String email,final String dept_name){
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.ADDFOODITEM,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.MEMBERURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -248,30 +241,34 @@ public class MenuManagement extends AppCompatActivity {
 
                         if (response.contains("success")) {
 
-                            Toast.makeText(getApplicationContext(),"Member added successfully",Toast.LENGTH_LONG).show();
 
-                            getAllMemberData();
+                            String password=response.split("-")[1].replace("\"}","");
+                            Toast.makeText(getApplicationContext(),"Member added successfully",Toast.LENGTH_LONG).show();
+                            sendMail(password);
+
+
                         } else {
 
                             Toast.makeText(getApplicationContext(),"Fail to add member",Toast.LENGTH_LONG).show();
 
                         }
-
+                        getAllMemberData();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Fail to add member",Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("type","add");
-                params.put("name",memberName);
-                params.put("price",dept);
+                params.put("name", memberName);
+                params.put("dept",dept_name);
+                params.put("email",email);
                 return params;
             }
         };
@@ -282,54 +279,43 @@ public class MenuManagement extends AppCompatActivity {
 
     }
 
+    private void sendMail(String password) {
+
+
+        SendMail sm = new SendMail(this, "bsse0923@iit.du.ac.bd", "Your Password",password);
+        sm.execute();
+    }
+
     public void getAllMemberData(){
 
 
         progressDialog.show();
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
                 Request.Method.POST,
-                Constraints.GETFOODITEMS,
+                Constraints.MEMBERINFOURL,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        ArrayList<FoodItemInfo[]> foodItemInfo=new ArrayList<>();
-
+                        memberInfos=new ArrayList<>();
+                        memberInfos.add(new MemberInfo("234","Md.Saeed Siddik",null,"IIT","image"));
+                        memberInfos.add(new MemberInfo("234","Nadia Nahar",null,"IIT",null));
                         for(int i=0;i<response.length();i++){
-                            FoodItemInfo[] foodItem=new FoodItemInfo[2];
+
                             JSONObject student = null;
                             try {
                                 student = response.getJSONObject(i);
-                                int id = student.getInt("id");
+                                String id = student.getString("id");
                                 String name = student.getString("name");
-                                double price = student.getDouble("price");
-                                String path = student.getString("imagepath");
-                                foodItem[0]=new FoodItemInfo(id,name,price,path);
-
-                                i++;
-                                if(i<response.length()){
-                                    student = response.getJSONObject(i);
-                                    id = student.getInt("id");
-                                    name = student.getString("name");
-                                    price = student.getDouble("price");
-                                    path = student.getString("imagepath");
-                                    foodItem[1]=new FoodItemInfo(id,name,price,path);
-
-
-                                }
-
-                                foodItemInfo.add(foodItem);
-
+                                String dept = student.getString("department");
+                                memberInfos.add(new MemberInfo(id,name,null,dept,null));
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-
-
-                        RecycleAdapter recycleAdapter=new RecycleAdapter(foodItemInfo);
-                        recyclerView=findViewById(R.id.recycle);
+                        RecycleAdapter recycleAdapter=new RecycleAdapter(memberInfos);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerView.setAdapter(recycleAdapter);
                         progressDialog.dismiss();

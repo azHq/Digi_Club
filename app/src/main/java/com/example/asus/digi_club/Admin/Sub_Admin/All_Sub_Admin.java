@@ -1,4 +1,4 @@
-package com.example.asus.digi_club;
+package com.example.asus.digi_club.Admin.Sub_Admin;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -21,11 +21,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.asus.digi_club.Admin.Member_Management.AllMembers;
+import com.example.asus.digi_club.Admin.Member_Management.MemberInfo;
+import com.example.asus.digi_club.Constraints;
+import com.example.asus.digi_club.DatabaseConnector;
+import com.example.asus.digi_club.R;
+import com.example.asus.digi_club.SendMail;
+import com.example.asus.digi_club.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +47,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AllMembers extends AppCompatActivity {
+public class All_Sub_Admin extends AppCompatActivity {
 
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -45,28 +55,34 @@ public class AllMembers extends AppCompatActivity {
     ArrayList<String> deleteItem=new ArrayList<>();
     Button delete;
     boolean itemdelete=false;
-
+    ArrayList<Sub_Admin_Info> memberInfos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_members);
+        setContentView(R.layout.activity_all__sub__admin);
         delete=findViewById(R.id.delete);
-        toolbar=findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("Members");
-        progressDialog=new ProgressDialog(AllMembers.this);
+        recyclerView=findViewById(R.id.recycle);
+        progressDialog=new ProgressDialog(All_Sub_Admin.this);
         progressDialog.setMessage("Please wait...");
         getAllMemberData();
-
     }
+
+    public void initRecycle(){
+
+        RecycleAdapter recycleAdapter=new RecycleAdapter(memberInfos);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(recycleAdapter);
+        progressDialog.dismiss();
+    }
+
 
     public void delete(View view){
 
-       
+
         for(String i:deleteItem){
 
             DatabaseConnector databaseConnector=new DatabaseConnector(getApplicationContext());
-            databaseConnector.deleteMember(i,Constraints.MEMBERURL,"delete");
+            databaseConnector.deleteMember(i, Constraints.Add_Delete_Admin,"delete");
         }
         delete.setVisibility(View.INVISIBLE);
         itemdelete=false;
@@ -76,8 +92,8 @@ public class AllMembers extends AppCompatActivity {
 
     public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewAdapter>{
 
-        ArrayList<MemberInfo> memberInfos;
-        public RecycleAdapter(ArrayList<MemberInfo> memberInfos){
+        ArrayList<Sub_Admin_Info> memberInfos;
+        public RecycleAdapter(ArrayList<Sub_Admin_Info> memberInfos){
             this.memberInfos=memberInfos;
         }
         public  class ViewAdapter extends RecyclerView.ViewHolder{
@@ -104,30 +120,30 @@ public class AllMembers extends AppCompatActivity {
         }
         @NonNull
         @Override
-        public ViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public RecycleAdapter.ViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.allmemberitem,parent,false);
-            return new ViewAdapter(view);
+            return new RecycleAdapter.ViewAdapter(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewAdapter holder, final int position) {
+        public void onBindViewHolder(@NonNull RecycleAdapter.ViewAdapter holder, final int position) {
 
 
-            MemberInfo memberInfo=memberInfos.get(position);
+            Sub_Admin_Info memberInfo=memberInfos.get(position);
 
             if(itemdelete) holder.checkBox.setVisibility(View.VISIBLE);
-            if(memberInfo.getImagePath()==null) holder.profile_image.setImageResource(R.drawable.profile2);
+            if(memberInfo.image_path==null) holder.profile_image.setImageResource(R.drawable.profile2);
             else{
                 holder.profile_image.setImageResource(R.drawable.saeed_sir);
             }
-            holder.dptName.setText(memberInfo.department);
+            holder.dptName.setText(memberInfo.email);
             holder.name.setText(memberInfo.name);
 
             holder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    deleteItem.add(memberInfos.get(position).id);
+                    deleteItem.add(memberInfos.get(position).id+"");
                     delete.setVisibility(View.VISIBLE);
                 }
             });
@@ -174,8 +190,9 @@ public class AllMembers extends AppCompatActivity {
         }
         if (id == R.id.terminate) {
 
-            itemdelete=true;
-            getAllMemberData();
+            if(itemdelete) itemdelete=false;
+            else itemdelete=true;
+            initRecycle();
             return true;
         }
 
@@ -184,11 +201,10 @@ public class AllMembers extends AppCompatActivity {
 
     public void addMember(){
 
-        AlertDialog.Builder builder=new AlertDialog.Builder(AllMembers.this);
-        View view=getLayoutInflater().inflate(R.layout.addmemberview,null);
+        AlertDialog.Builder builder=new AlertDialog.Builder(All_Sub_Admin.this);
+        View view=getLayoutInflater().inflate(R.layout.add_sub_admin_view,null);
         final EditText name=view.findViewById(R.id.memberName);
         final EditText dept=view.findViewById(R.id.deptName);
-        final EditText dept_name=view.findViewById(R.id.dept);
         Button addmember=view.findViewById(R.id.addmember);
         builder.setView(view);
         final Dialog dialog=builder.show();
@@ -197,8 +213,8 @@ public class AllMembers extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if(name.getText().toString().length()>2&&dept.getText().toString().length()>2&&dept_name.getText().toString().length()>2){
-                    addMember(name.getText().toString(),dept.getText().toString(),dept_name.getText().toString());
+                if(name.getText().toString().length()>2&&dept.getText().toString().length()>2){
+                    addMember(name.getText().toString(),dept.getText().toString(),"sub_admin");
 
                 }
                 else{
@@ -214,10 +230,9 @@ public class AllMembers extends AppCompatActivity {
 
     }
 
-    public  void addMember(final String memberName,final String email,final String dept_name){
+    public void addMember(final String memberName,final String email,final String type){
 
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.MEMBERURL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constraints.Add_Delete_Admin,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -237,14 +252,15 @@ public class AllMembers extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"Fail to add member",Toast.LENGTH_LONG).show();
 
                         }
+                        progressDialog.dismiss();
                         getAllMemberData();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(getApplicationContext(),"Fail to add member",Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                       // Toast.makeText(getApplicationContext(),"Fail to add member",Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
@@ -252,7 +268,6 @@ public class AllMembers extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("type","add");
                 params.put("name", memberName);
-                params.put("dept",dept_name);
                 params.put("email",email);
                 return params;
             }
@@ -271,37 +286,36 @@ public class AllMembers extends AppCompatActivity {
         sm.execute();
     }
 
-    public void getAllMemberData(){
+    public void getAllMemberData()  {
 
 
         progressDialog.show();
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
                 Request.Method.POST,
-                Constraints.MEMBERINFOURL,
+                Constraints.GET_ALL_DATA,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        ArrayList<MemberInfo> memberInfos=new ArrayList<>();
-                        memberInfos.add(new MemberInfo("234","Md.Saeed Siddik",null,"IIT","image"));
-                        memberInfos.add(new MemberInfo("234","Nadia Nahar",null,"IIT",null));
+                        memberInfos=new ArrayList<>();
                         for(int i=0;i<response.length();i++){
 
                             JSONObject student = null;
                             try {
                                 student = response.getJSONObject(i);
                                 String id = student.getString("id");
-                                String name = student.getString("name");
-                                String dept = student.getString("department");
-                                memberInfos.add(new MemberInfo(id,name,null,dept,null));
+                                String name = student.getString("user_name");
+                                String email = student.getString("email");
+                                String type = student.getString("type");
+                                String path=student.getString("image_path");
+                                memberInfos.add(new Sub_Admin_Info(id,email,type,name,null));
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                         RecycleAdapter recycleAdapter=new RecycleAdapter(memberInfos);
-                        recyclerView=findViewById(R.id.recycle);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerView.setAdapter(recycleAdapter);
                         progressDialog.dismiss();

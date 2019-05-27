@@ -26,40 +26,17 @@
                 android:gravity="center_vertical"
                 android:text="Member Name"
                 android:textStyle="bold" />
-
             <EditText
                 android:id="@+id/memberName"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:gravity="center_vertical"
                 android:layout_marginEnd="6dp"
                 android:layout_marginStart="6dp"
+                android:paddingStart="6dp"
+                android:textColor="#000000"
                 android:background="@drawable/edittextback"
-                android:gravity="center_vertical"
                 android:hint="Enter Member Name.."
-                android:paddingStart="6dp"
-                android:textColor="#2f2727" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="18dp"
-                android:gravity="center_vertical"
-                android:text="Department Name"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/dept"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginStart="6dp"
-                android:background="@drawable/edittextback"
-                android:gravity="center_vertical"
-                android:hint="Enter Department Name.."
-                android:paddingStart="6dp"
-                android:textColor="#2f2727" />
+                android:layout_height="40dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -70,18 +47,17 @@
                 android:gravity="center_vertical"
                 android:text="Member Email"
                 android:textStyle="bold" />
-
             <EditText
                 android:id="@+id/deptName"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginStart="6dp"
-                android:background="@drawable/edittextback"
                 android:gravity="center_vertical"
-                android:hint="Enter Email.."
+                android:layout_width="match_parent"
+                android:layout_marginEnd="6dp"
+                android:textColor="#000000"
+                android:layout_marginStart="6dp"
                 android:paddingStart="6dp"
-                android:textColor="#2f2727" />
+                android:background="@drawable/edittextback"
+                android:hint="Enter Email.."
+                android:layout_height="40dp" />
 
             <Button
                 android:id="@+id/addmember"
