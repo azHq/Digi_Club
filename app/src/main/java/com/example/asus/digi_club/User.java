@@ -6,8 +6,10 @@ public class User {
     private String type;
     private String username, email, gender;
 
-    public User(String id, String username, String email, String gender) {
+
+    public User(String id, String type, String username, String email, String gender) {
         this.id = id;
+        this.type = type;
         this.username = username;
         this.email = email;
         this.gender = gender;

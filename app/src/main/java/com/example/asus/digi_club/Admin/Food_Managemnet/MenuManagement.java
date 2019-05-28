@@ -295,7 +295,7 @@ public class MenuManagement extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                addMember(name.getText().toString(),dept.getText().toString(),quantity.getText().toString(),"");
+                addMember(name.getText().toString(),dept.getText().toString(),quantity.getText().toString(),"burger");
                 dialog.dismiss();
 
             }
@@ -391,7 +391,7 @@ public class MenuManagement extends AppCompatActivity {
                 params.put("id",id+"");
                 params.put("name",name);
                 params.put("quantity",quantity);
-                params.put("image_path","helo");
+                params.put("image_path","egg");
                 params.put("price",price);
                 return params;
             }
@@ -434,6 +434,7 @@ public class MenuManagement extends AppCompatActivity {
                                     name = student.getString("name");
                                     price = student.getDouble("price");
                                     path = student.getString("imagepath");
+                                    quantity=Integer.parseInt(student.getString("quantity"));
                                     foodItem[1]=new FoodItemInfo(path,id,name,price,quantity);
 
 

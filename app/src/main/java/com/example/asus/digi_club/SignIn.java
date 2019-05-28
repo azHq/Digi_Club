@@ -14,7 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.asus.digi_club.Admin.Home;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,15 +76,27 @@ public class SignIn extends AppCompatActivity {
 
 
 
+
                         if (response.contains("success")) {
 
-                            String[] str=response.toString().split(",");
+                            String[] str=response.toString().split("-");
                             Toast.makeText(getApplicationContext(),"Sign Up Successfully", Toast.LENGTH_SHORT).show();
 
-                            User user = new User(str[1],null,Email,Password,"type");
+                            User user = new User(str[1],str[2],null,Email,Password);
                             SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                             finish();
-                            startActivity(new Intent(getApplicationContext(), Navdrawer.class));
+                            if(str[2].contains("user")){
+                                startActivity(new Intent(getApplicationContext(), Navdrawer.class));
+                            }
+                            else if(str[2].contains("super")){
+
+                                startActivity(new Intent(getApplicationContext(), Home.class));
+                            }
+                            else if(str[2].contains("sub_admin")){
+
+                                startActivity(new Intent(getApplicationContext(), com.example.asus.digi_club.Admin.Sub_Admin.Home.class));
+                            }
+
 
                         } else {
                             Toast.makeText(getApplicationContext(), "Login Fail", Toast.LENGTH_SHORT).show();
@@ -93,7 +107,7 @@ public class SignIn extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(),"Login Fail", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getApplicationContext(),"Login Fail", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override

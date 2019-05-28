@@ -46,6 +46,15 @@
                 android:text="Price: 350/="
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/avail"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:textColor="#f6f2f2"
+                android:text="Available:2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout

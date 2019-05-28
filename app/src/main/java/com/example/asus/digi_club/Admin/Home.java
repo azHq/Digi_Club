@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.asus.digi_club.Admin.Bill_Management.BillManagement;
 import com.example.asus.digi_club.Admin.Bill_Management.User_Profiles;
@@ -15,6 +16,8 @@ import com.example.asus.digi_club.Admin.Food_Managemnet.MenuManagement;
 import com.example.asus.digi_club.Admin.Member_Management.AllMembers;
 import com.example.asus.digi_club.Admin.Member_Management.MemberType_Selector;
 import com.example.asus.digi_club.R;
+import com.example.asus.digi_club.SharedPrefManager;
+
 public class Home extends AppCompatActivity {
 
     LinearLayout food_management,bill_management,member_management,branch_management;
@@ -70,13 +73,13 @@ public class Home extends AppCompatActivity {
 
         int id = item.getItemId();
 
-
         if (id == R.id.profile) {
 
             return true;
         }
         if (id == R.id.logout) {
-
+            SharedPrefManager.getInstance(getApplicationContext()).logout();
+            finish();
             return true;
         }
 

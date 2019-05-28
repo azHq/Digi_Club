@@ -2,6 +2,8 @@ package com.example.asus.digi_club.Admin.Sub_Admin;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.asus.digi_club.Admin.Bill_Management.BillManagement;
 import com.example.asus.digi_club.Admin.Member_Management.AllMembers;
 import com.example.asus.digi_club.Admin.Member_Management.MemberInfo;
 import com.example.asus.digi_club.Constraints;
@@ -53,6 +56,7 @@ public class All_Sub_Admin extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressDialog progressDialog;
     ArrayList<String> deleteItem=new ArrayList<>();
+    static int branch_id=-1;
     Button delete;
     boolean itemdelete=false;
     ArrayList<Sub_Admin_Info> memberInfos;
@@ -64,6 +68,7 @@ public class All_Sub_Admin extends AppCompatActivity {
         recyclerView=findViewById(R.id.recycle);
         progressDialog=new ProgressDialog(All_Sub_Admin.this);
         progressDialog.setMessage("Please wait...");
+        branch_id=-1;
         getAllMemberData();
     }
 
@@ -206,6 +211,7 @@ public class All_Sub_Admin extends AppCompatActivity {
         final EditText name=view.findViewById(R.id.memberName);
         final EditText dept=view.findViewById(R.id.deptName);
         Button addmember=view.findViewById(R.id.addmember);
+        Button add_branch=view.findViewById(R.id.addbranch);
         builder.setView(view);
         final Dialog dialog=builder.show();
         addmember.setOnClickListener(new View.OnClickListener() {
@@ -213,21 +219,52 @@ public class All_Sub_Admin extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if(name.getText().toString().length()>2&&dept.getText().toString().length()>2){
-                    addMember(name.getText().toString(),dept.getText().toString(),"sub_admin");
+                if(branch_id!=-1){
 
+                    if(name.getText().toString().length()>=2&&dept.getText().toString().length()>=2){
+                        addMember(name.getText().toString(),dept.getText().toString(),"sub_admin");
+                        dialog.dismiss();
+                    }
+                    else{
+
+                        showMessage("Please Enater Name and Email");
+                        Toast.makeText(getApplicationContext(),"Please Enater Name and Email",Toast.LENGTH_LONG).show();
+
+                    }
                 }
                 else{
 
-                    Toast.makeText(getApplicationContext(),"Please Enater Name and Email",Toast.LENGTH_LONG).show();
-                    addMember();
+                    showMessage("Plase Select Branch");
                 }
 
-                dialog.dismiss();
+
+
+
+            }
+        });
+        add_branch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getApplicationContext(), Assign_branch.class));
 
             }
         });
 
+    }
+
+    public void showMessage(String title){
+
+        android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(All_Sub_Admin.this);
+        builder.setMessage(title);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     public void addMember(final String memberName,final String email,final String type){
@@ -269,6 +306,7 @@ public class All_Sub_Admin extends AppCompatActivity {
                 params.put("type","add");
                 params.put("name", memberName);
                 params.put("email",email);
+                params.put("branch_id",branch_id+"");
                 return params;
             }
         };

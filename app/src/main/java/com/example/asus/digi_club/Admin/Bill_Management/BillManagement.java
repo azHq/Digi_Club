@@ -55,12 +55,14 @@ public class BillManagement extends AppCompatActivity {
     Button delete;
     boolean itemdelete=false;
     ArrayList<Food> memberInfos;
+    final int[] range={0,1,2,3,4,5,6,7,8,9,10};
     Button confirmbill;
     SharedPrefManager sharedPrefManager;
     User user;
     String user_id,admin_id;
     double totalBill=0.0;
     String description="";
+    int key,quantity2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,16 +146,17 @@ public class BillManagement extends AppCompatActivity {
         public  class ViewAdapter extends RecyclerView.ViewHolder{
 
             View mView;
-            TextView price,name;
+            TextView price,name,available;
             CircleImageView profile_image;
             CheckBox checkBox;
             Spinner quantity2;
-            String[] str={"1","2","3","4","5","6","7","8","9","10"};
+            String[] str={"0","1","2","3","4","5","6","7","8","9","10"};
             public ViewAdapter(View itemView) {
                 super(itemView);
                 mView=itemView;
                 checkBox=mView.findViewById(R.id.selector);
                 quantity2=mView.findViewById(R.id.quantity);
+                available=mView.findViewById(R.id.avail);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>
                         (BillManagement.this,R.layout.spinnertext,str);
                 adapter.setDropDownViewResource(R.layout.spinnertext);
@@ -176,7 +179,7 @@ public class BillManagement extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull final ViewAdapter holder, final int position) {
 
-            final int[] range={1,2,3,4,5,6,7,8,9,10};
+
             Food memberInfo=memberInfos.get(position);
             if(memberInfo.getPicturePath().equals("pizza")) holder.profile_image.setImageResource(R.drawable.pizza);
             else if(memberInfo.getPicturePath().equals("burger")) holder.profile_image.setImageResource(R.drawable.burger);
@@ -186,16 +189,47 @@ public class BillManagement extends AppCompatActivity {
             else if(memberInfo.getPicturePath().equals("juice")) holder.profile_image.setImageResource(R.drawable.juice);
             holder.price.setText(memberInfo.price+"/=");
             holder.name.setText(memberInfo.foodName);
+            holder.available.setText("Available Item: "+memberInfo.quatiy);
 
 
-            int quantity=range[holder.quantity2.getSelectedItemPosition()];
+
             holder.quantity2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                     if(selectedItem.get(position)!=null){
-                        int quantity=range[holder.quantity2.getSelectedItemPosition()];
-                        selectedItem.put(position,quantity);
+
+                        if(availablity(position,range[holder.quantity2.getSelectedItemPosition()])){
+                            int quantity=range[holder.quantity2.getSelectedItemPosition()];
+                            selectedItem.put(position,quantity);
+                            confirmbill.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            selectedItem.remove(position);
+                            confirmbill.setVisibility(View.INVISIBLE);
+                            AlertDialog.Builder builder=new AlertDialog.Builder(BillManagement.this);
+                            builder.setTitle("Sorry...");
+                            builder.setMessage("Insufficient Item.Please Select Quantity "+(Integer.parseInt(memberInfos.get(position).quatiy)));
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.show();
+                        }
+
+
+                    }
+                    else{
+
+
+                        if(availablity(position,range[holder.quantity2.getSelectedItemPosition()])&&range[holder.quantity2.getSelectedItemPosition()]>0){
+                            key=position;
+                            quantity2=range[holder.quantity2.getSelectedItemPosition()];
+                            confirmbill.setVisibility(View.VISIBLE);
+                        }
 
                     }
 
@@ -212,9 +246,16 @@ public class BillManagement extends AppCompatActivity {
 
                     if(holder.checkBox.isChecked()){
 
-                        selectedItem.put(position,1);
+                        if(key==position){
+                            selectedItem.put(position,quantity2);
+                        }
+                        else {
+                            selectedItem.put(position,0);
+                            Toast.makeText(getApplicationContext(),"Please select quantity",Toast.LENGTH_LONG).show();
+                        }
+
                         confirmbill.setVisibility(View.VISIBLE);
-                        Toast.makeText(getApplicationContext(),"Please select quantity",Toast.LENGTH_LONG).show();
+
                     }
                     else{
 
@@ -240,24 +281,68 @@ public class BillManagement extends AppCompatActivity {
 
     }
 
+    public boolean availablity(int position,int selectedQuantity){
+
+
+        if((Integer.parseInt(memberInfos.get(position).quatiy)-selectedQuantity>=0)) return true;
+        else return false;
+    }
+
     public void generateBill(View view)  {
 
+        int quantity=10;
+        String itemName=null;
+        if(selectedItem!=null&&selectedItem.size()>0){
 
-        StringBuilder s=new StringBuilder();
-        s.append("Food   quantity     Price\n\n");
-        for(int key:selectedItem.keySet()){
+            StringBuilder s=new StringBuilder();
+            s.append("Food   quantity     Price\n\n");
+            for(int key:selectedItem.keySet()){
+                if(selectedItem.get(key)<=0){
+                    quantity=selectedItem.get(key);
+                    itemName=memberInfos.get(key).foodName;
+                    break;
+                }
+                totalBill+=(selectedItem.get(key)*Double.parseDouble(memberInfos.get(key).price));
+                double everyItemBill=(selectedItem.get(key)*Double.parseDouble(memberInfos.get(key).price));
+                s.append(memberInfos.get(key).foodName+"      "+selectedItem.get(key)+"        "+everyItemBill+"\n\n");
+                description+=memberInfos.get(key).foodId+"-"+memberInfos.get(key).foodName+"-"+memberInfos.get(key).price+"-"+selectedItem.get(key)+",";
 
-            totalBill+=(selectedItem.get(key)*Double.parseDouble(memberInfos.get(key).price));
-            double everyItemBill=(selectedItem.get(key)*Double.parseDouble(memberInfos.get(key).price));
-            s.append(memberInfos.get(key).foodName+"    "+selectedItem.get(key)+"     "+everyItemBill+"\n\n");
-            description+=memberInfos.get(key).foodId+"-"+memberInfos.get(key).foodName+"-"+memberInfos.get(key).price+"-"+selectedItem.get(key)+",";
+            }
 
+            String billpaper="Total Bill: "+totalBill+"/="+"\n\n"+s.toString();
+            if(quantity<=0){
+
+                AlertDialog.Builder builder=new AlertDialog.Builder(BillManagement.this);
+                builder.setMessage("Please Select "+itemName +"'s Quantity");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+            }
+            else{
+                confirmbill.setVisibility(View.INVISIBLE);
+                selectedItem.remove(selectedItem);
+                showLog(billpaper);
+            }
         }
-        confirmbill.setVisibility(View.INVISIBLE);
-        selectedItem.remove(selectedItem);
+        else {
 
-        String billpaper="Total Bill: "+totalBill+"/="+"\n\n"+s.toString();
-        showLog(billpaper);
+            AlertDialog.Builder builder=new AlertDialog.Builder(BillManagement.this);
+            builder.setMessage("Please Select Item");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+        }
+
 
     }
 
@@ -266,12 +351,19 @@ public class BillManagement extends AppCompatActivity {
         AlertDialog.Builder builder=new AlertDialog.Builder(BillManagement.this);
         builder.setTitle("Your Bill");
         builder.setMessage(billpaper);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 addBill();
                 sendMail(billpaper);
+
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
                 dialog.dismiss();
             }
@@ -289,7 +381,7 @@ public class BillManagement extends AppCompatActivity {
                     public void onResponse(String response) {
 
 
-
+                        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                         if (response.contains("success")) {
 
                             Toast.makeText(getApplicationContext(),"Bill Added Successfully",Toast.LENGTH_LONG).show();

@@ -13,6 +13,9 @@ public class Constraints {
     public static  final String GET_ALL_DATA=BASEURL+"Get_All_Data.php";
     public static  final String Add_Delete_Admin=BASEURL+"Add_Delete_Admin.php";
     public static  final String Transaction=BASEURL+"Transaction.php";
+    public static  final String Branch_Info=BASEURL+"Branch_Info.php";
+    public static  final String Add_Delete_Branch=BASEURL+"Add_Delete_Branch.php";
+    public static  final String Update_Branch=BASEURL+"Update_Branch.php";
 
 
 }

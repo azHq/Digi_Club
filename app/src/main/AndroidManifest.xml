@@ -55,8 +55,13 @@
             android:name=".Admin.Sub_Admin.All_Sub_Admin"
             android:label="Sub_Admin"
             android:theme="@style/theme3" />
-        <activity android:name=".Admin.Bill_Management.User_Profiles"
-            android:theme="@style/theme3"/>
+        <activity
+            android:name=".Admin.Bill_Management.User_Profiles"
+            android:theme="@style/theme3" />
+        <activity
+            android:name=".Admin.Branch_Managemnet.Branches"
+            android:theme="@style/theme3" />
+        <activity android:name=".Admin.Sub_Admin.Assign_branch"></activity>
     </application>
 
 </manifest>

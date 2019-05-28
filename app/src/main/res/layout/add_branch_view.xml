@@ -24,20 +24,20 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
-                android:text="Member Name"
+                android:text="Branch Name"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/memberName"
+                android:id="@+id/branch_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/edittextback"
                 android:gravity="center_vertical"
-                android:hint="Enter Member Name.."
+                android:hint="Enter Branch Name.."
                 android:paddingStart="6dp"
-                android:textColor="#2f2727" />
+                android:textColor="#ea282323" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -46,20 +46,20 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="18dp"
                 android:gravity="center_vertical"
-                android:text="Department Name"
+                android:text="Manager Name"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/dept"
+                android:id="@+id/manager_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/edittextback"
                 android:gravity="center_vertical"
-                android:hint="Enter Department Name.."
+                android:hint="Enter Manager Name"
                 android:paddingStart="6dp"
-                android:textColor="#2f2727" />
+                android:textColor="#494242" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -68,23 +68,20 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="18dp"
                 android:gravity="center_vertical"
-                android:text="Member Email"
+                android:text="Contact"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/deptName"
+                android:id="@+id/contact"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/edittextback"
                 android:gravity="center_vertical"
-                android:hint="Enter Email.."
+                android:hint="Enter Contact.."
                 android:paddingStart="6dp"
-                android:textColor="#2f2727" />
-
-
-
+                android:textColor="#494242" />
 
             <Button
                 android:id="@+id/addmember"
@@ -92,7 +89,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/signupbutton"
-                android:text="Add Member"
+                android:text="Add Branch"
                 android:textColor="#fbfafa"
                 android:textStyle="bold" />
 
@@ -101,9 +98,6 @@
 
 
     </android.support.v7.widget.CardView>
-
-
-
 
 
 </LinearLayout>

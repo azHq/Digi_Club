@@ -55,23 +55,13 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/price"
+                    android:id="@+id/status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="serif"
-                    android:text="Price:245/="
+                    android:text="Open"
                     android:textAlignment="center"
                     android:textColor="#1cc40d"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/quantity1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="serif"
-                    android:text="Quantity: 2"
-                    android:textAlignment="center"
-                    android:textColor="#233dec"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -131,23 +121,13 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/price2"
+                    android:id="@+id/status2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="serif"
-                    android:text="Price:45/="
+                    android:text="Close"
                     android:textAlignment="center"
                     android:textColor="#1cc40d"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/quantity2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="serif"
-                    android:text="Quantity: 2"
-                    android:textAlignment="center"
-                    android:textColor="#233dec"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -167,11 +147,6 @@
 
 
     </android.support.constraint.ConstraintLayout>
-
-
-
-
-
 
 
 </RelativeLayout>

@@ -25,12 +25,27 @@ public class MainActivity extends AppCompatActivity {
 
                 if(user.getId()!=null) {
 
-                    startActivity(new Intent(getApplicationContext(), Home.class));
-                    finish();
+                    if(user.getType().contains("user")){
+
+                        startActivity(new Intent(getApplicationContext(),Navdrawer.class));
+                        finish();
+                    }
+                    else if(user.getType().contains("super")){
+
+                        startActivity(new Intent(getApplicationContext(), Home.class));
+                        finish();
+                    }
+                    else if(user.getType().contains("sub_admin")){
+
+                        startActivity(new Intent(getApplicationContext(), com.example.asus.digi_club.Admin.Sub_Admin.Home.class));
+                        finish();
+                    }
+
+
                 }
                 else{
 
-                    startActivity(new Intent(MainActivity.this,Navdrawer.class));
+                    startActivity(new Intent(MainActivity.this,TypeSelector.class));
                     finish();
                 }
 

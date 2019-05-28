@@ -4,15 +4,21 @@
     android:layout_width="32dp"
     app:popupTheme="@style/bluetooth_popup">
     <item
-        android:id="@+id/profile"
+        android:id="@+id/add_food"
         android:orderInCategory="0"
-        android:title="Profile"
+        android:title="Add Branch"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/logout"
+        android:id="@+id/update"
         android:orderInCategory="0"
-        android:title="Logout"
+        android:title="Update"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/remove"
+        android:orderInCategory="0"
+        android:title="Delete"
         app:showAsAction="never" />
 
 </menu>

@@ -110,7 +110,7 @@ public class SignUp extends AppCompatActivity {
                             String[] str=response.toString().split(",");
                             Toast.makeText(getApplicationContext(),"Sign Up Successfully", Toast.LENGTH_SHORT).show();
 
-                            User user = new User(str[1],userName,Email,Password);
+                            User user = new User(str[1],"type",userName,Email,Password);
                             SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                             finish();
                             startActivity(new Intent(getApplicationContext(), Navdrawer.class));

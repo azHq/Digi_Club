@@ -60,6 +60,19 @@
                 android:layout_height="40dp" />
 
             <Button
+                android:id="@+id/addbranch"
+                android:layout_width="150dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="#298803"
+                android:background="@drawable/signupbutton"
+                android:text="Select Branch"
+                android:textAllCaps="false"
+                android:textColor="#fbfafa"
+                android:textStyle="bold" />
+
+
+            <Button
                 android:id="@+id/addmember"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -68,6 +81,7 @@
                 android:text="Add Member"
                 android:textColor="#fbfafa"
                 android:textStyle="bold" />
+
 
         </LinearLayout>
 
