@@ -16,6 +16,13 @@ public class Constraints {
     public static  final String Branch_Info=BASEURL+"Branch_Info.php";
     public static  final String Add_Delete_Branch=BASEURL+"Add_Delete_Branch.php";
     public static  final String Update_Branch=BASEURL+"Update_Branch.php";
+    public static  final String Bill_History=BASEURL+"Bill_History.php";
+    public static  final String GET_ALL_TRANSACTION_DATA=BASEURL+"get_all_trans_data.php";
+    public static  final String Re_Initialize_bill=BASEURL+"Re_Initialize_bill.php";
+    public static  final String Get_Single_Member=BASEURL+"Get_Single_Member.php";
+
+
+
 
 
 }

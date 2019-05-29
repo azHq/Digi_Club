@@ -1,4 +1,4 @@
-package com.example.asus.digi_club.Admin.Bill_Management;
+package com.example.asus.digi_club.UserPanel;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -68,10 +68,9 @@ public class BillManagement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_management);
         recyclerView=findViewById(R.id.recycle);
-        user_id=getIntent().getStringExtra("id");
         sharedPrefManager= SharedPrefManager.getInstance(getApplicationContext());
         user=sharedPrefManager.getUser();
-        admin_id=user.getId();
+        user_id=user.getId();
 
         confirmbill=findViewById(R.id.confirmbill);
         progressDialog=new ProgressDialog(BillManagement.this);
@@ -384,6 +383,7 @@ public class BillManagement extends AppCompatActivity {
 
                         if (response.contains("success")) {
 
+                            confirmbill.setVisibility(View.INVISIBLE);
                             Toast.makeText(getApplicationContext(),"Bill Added Successfully",Toast.LENGTH_LONG).show();
                             sendMail(billpaper);
 
@@ -406,8 +406,8 @@ public class BillManagement extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("type","add");
-                params.put("user_id", user_id);
-                params.put("admin_id",admin_id);
+                params.put("user_id",user_id);
+                params.put("admin_id",-1+"");
                 params.put("total_bill",totalBill+"");
                 params.put("description",description);
                 return params;

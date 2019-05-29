@@ -16,4 +16,5 @@
     <color name="dark">#07840b</color>
     <color name="light">@android:color/holo_green_dark</color>
     <color name="primary_material_dark">#5aac07</color>
+    <color name="textcolor1">#2c2424</color>
 </resources>

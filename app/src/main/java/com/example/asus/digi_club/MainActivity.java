@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.asus.digi_club.Admin.Home;
+import com.example.asus.digi_club.UserPanel.Navdrawer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,19 +24,19 @@ public class MainActivity extends AppCompatActivity {
                 sharedPrefManager=SharedPrefManager.getInstance(getApplicationContext());
                 user=sharedPrefManager.getUser();
 
-                if(user.getId()!=null) {
+                if(user!=null&&user.getType()!=null) {
 
-                    if(user.getType().contains("user")){
+                    if(user.getType()!=null&&user.getType().contains("user")){
 
                         startActivity(new Intent(getApplicationContext(),Navdrawer.class));
                         finish();
                     }
-                    else if(user.getType().contains("super")){
+                    else if(user.getType()!=null&&user.getType().contains("super")){
 
                         startActivity(new Intent(getApplicationContext(), Home.class));
                         finish();
                     }
-                    else if(user.getType().contains("sub_admin")){
+                    else if(user.getType()!=null&&user.getType().contains("sub_admin")){
 
                         startActivity(new Intent(getApplicationContext(), com.example.asus.digi_club.Admin.Sub_Admin.Home.class));
                         finish();

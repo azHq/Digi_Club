@@ -15,6 +15,7 @@ import com.example.asus.digi_club.Admin.Branch_Managemnet.Branches;
 import com.example.asus.digi_club.Admin.Food_Managemnet.MenuManagement;
 import com.example.asus.digi_club.Admin.Member_Management.AllMembers;
 import com.example.asus.digi_club.Admin.Member_Management.MemberType_Selector;
+import com.example.asus.digi_club.Admin.Sub_Admin.Bill_Management_Home;
 import com.example.asus.digi_club.R;
 import com.example.asus.digi_club.SharedPrefManager;
 
@@ -42,7 +43,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(), User_Profiles.class));
+                startActivity(new Intent(getApplicationContext(), Bill_Management_Home.class));
             }
         });
         member_management.setOnClickListener(new View.OnClickListener() {

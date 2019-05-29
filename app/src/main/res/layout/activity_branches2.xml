@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Admin.Branch_Managemnet.Branches">
+    tools:context=".UserPanel.Branches">
 
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/appbar"
@@ -15,21 +15,5 @@
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
-
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_margin="6dp"
-        android:background="@drawable/signupbutton"
-        android:backgroundTint="#b71313"
-        android:fontFamily="sans-serif"
-        android:onClick="delete"
-        android:text="Delete Account"
-        android:textColor="#faf8f8"
-        android:textStyle="bold"
-        android:visibility="invisible" />
 
 </RelativeLayout>

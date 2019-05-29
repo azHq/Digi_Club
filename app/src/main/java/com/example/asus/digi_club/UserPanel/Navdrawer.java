@@ -1,11 +1,10 @@
-package com.example.asus.digi_club;
+package com.example.asus.digi_club.UserPanel;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,9 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.example.asus.digi_club.Admin.Branch_Managemnet.Branches;
+import android.view.View;
 import com.example.asus.digi_club.Admin.Food_Managemnet.MenuManagement;
+import com.example.asus.digi_club.Profile;
+import com.example.asus.digi_club.R;
+import com.example.asus.digi_club.SharedPrefManager;
 
 public class Navdrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -96,7 +97,7 @@ public class Navdrawer extends AppCompatActivity
 
         } else if (id == R.id.allmembers) {
 
-            startActivity(new Intent(this,AllMembers.class));
+            startActivity(new Intent(this, AllMembers.class));
 
         } else if (id == R.id.Branches) {
 

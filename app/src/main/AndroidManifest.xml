@@ -25,9 +25,6 @@
         </activity>
         <activity android:name=".SignIn" />
         <activity
-            android:name=".Navdrawer"
-            android:label="Home" />
-        <activity
             android:name=".Admin.Bill_Management.BillManagement"
             android:label="Bill Managemnet"
             android:theme="@style/theme3" />
@@ -39,7 +36,14 @@
             android:name=".Admin.Food_Managemnet.MenuManagement"
             android:label="Food Managemnet"
             android:theme="@style/theme3" />
-        <activity android:name=".Profile" />
+        <activity
+            android:name=".UserPanel.AllMembers"
+            android:label="All Members"
+            android:theme="@style/theme3" />
+        <activity
+            android:label="Profile"
+            android:theme="@style/theme3"
+            android:name=".Profile" />
         <activity
             android:name=".SignUp"
             android:theme="@style/Splash" />
@@ -49,8 +53,9 @@
             android:label="Home"
             android:theme="@style/theme3" />
         <activity android:name=".Admin.Profile" />
-        <activity android:name=".Admin.Sub_Admin.Home"
-            android:theme="@style/theme3"/>
+        <activity
+            android:name=".Admin.Sub_Admin.Home"
+            android:theme="@style/theme3" />
         <activity android:name=".Admin.Member_Management.MemberType_Selector" />
         <activity
             android:name=".Admin.Sub_Admin.All_Sub_Admin"
@@ -63,6 +68,28 @@
             android:name=".Admin.Branch_Managemnet.Branches"
             android:theme="@style/theme3" />
         <activity android:name=".Admin.Sub_Admin.Assign_branch" />
+        <activity
+            android:name=".UserPanel.Branches"
+            android:label="Branches"
+            android:theme="@style/theme3" />
+        <activity
+            android:name=".Admin.Sub_Admin.Transaction_Log"
+            android:label="Transaction Log"
+            android:theme="@style/theme3" />
+        <activity android:name=".Admin.Sub_Admin.All_Users_Bill_Info" />
+        <activity
+            android:name=".Admin.Sub_Admin.Bill_Management_Home"
+            android:label="Bill Management"
+            android:theme="@style/theme3" />
+        <activity android:name=".UserPanel.Navdrawer"/>
+        <activity
+            android:label="Bill Generate"
+            android:theme="@style/theme3"
+            android:name=".UserPanel.BillManagement"/>
+        <activity
+            android:label="ReInitialize Monthly Bill"
+            android:theme="@style/theme3"
+            android:name=".Admin.Sub_Admin.Montly_Update_Bill"/>
     </application>
 
 </manifest>

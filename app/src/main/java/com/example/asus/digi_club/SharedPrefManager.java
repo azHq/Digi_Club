@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.example.asus.digi_club.Admin.Branch_Managemnet.Branches;
+
 public class SharedPrefManager {
 
 
@@ -13,6 +15,8 @@ public class SharedPrefManager {
     private static final String KEY_GENDER = "keygender";
     private static final String KEY_ID = "keyid";
     private static final String TYPE = "type";
+    private static final String BRANCH_ID = "branch_id";
+
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -37,6 +41,7 @@ public class SharedPrefManager {
         editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_EMAIL, user.getEmail());
         editor.putString(KEY_GENDER, user.getGender());
+        editor.putInt(BRANCH_ID,user.getBranch_id());
         editor.apply();
     }
 
@@ -54,7 +59,8 @@ public class SharedPrefManager {
                 sharedPreferences.getString(TYPE,null),
                 sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(KEY_EMAIL, null),
-                sharedPreferences.getString(KEY_GENDER, null)
+                sharedPreferences.getString(KEY_GENDER, null),
+                sharedPreferences.getInt(BRANCH_ID, -1)
         );
     }
 

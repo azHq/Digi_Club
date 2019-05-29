@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="32dp"
+    app:popupTheme="@style/bluetooth_popup">
+    <item
+        android:id="@+id/profile"
+        android:orderInCategory="0"
+        android:title="Profile"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/branch"
+        android:orderInCategory="0"
+        android:title="Edit Branch Info"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="0"
+        android:title="Logout"
+        app:showAsAction="never" />
 
 </menu>

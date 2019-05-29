@@ -1,18 +1,21 @@
-package com.example.asus.digi_club;
+package com.example.asus.digi_club.Admin.Sub_Admin;
 
-public class MemberInfo{
+public class Member_info2{
     public String id;
     public String name;
     public String email;
     public String imagePath;
     public String department;
+    public String total_bill;
 
-    public MemberInfo(String id, String name, String email, String department,String imagePath) {
+
+    public Member_info2(String id, String name, String email, String imagePath, String department, String total_bill) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.imagePath = imagePath;
         this.department = department;
-        this.imagePath=imagePath;
+        this.total_bill = total_bill;
     }
 
 
@@ -54,5 +57,13 @@ public class MemberInfo{
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getTotal_bill() {
+        return total_bill;
+    }
+
+    public void setTotal_bill(String total_bill) {
+        this.total_bill = total_bill;
     }
 }

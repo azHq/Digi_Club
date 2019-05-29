@@ -4,37 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Admin.Sub_Admin.Home">
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".6"
-        android:background="@drawable/club_image"
-        android:textColor="#faf7f7" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#e45f5d5d"
-        android:fontFamily="serif"
-        android:text="Branch-1"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#f9f7f7"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+    tools:context=".Admin.Sub_Admin.Bill_Management_Home">
 
     <LinearLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical"
-        android:weightSum="6"
-        android:layout_height="0dp">
+        android:weightSum="4"
+        android:layout_height="400dp">
 
         <LinearLayout
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp">
@@ -44,7 +24,7 @@
                 app:cardCornerRadius="10dp"
                 android:layout_weight="1"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="15dp"
                 android:layout_width="match_parent"
@@ -60,6 +40,7 @@
                     <ImageView
                         android:layout_weight="3"
                         android:layout_margin="6dp"
+                        android:padding="4dp"
                         android:src="@drawable/food1"
                         android:layout_width="match_parent"
                         android:layout_height="0dp" />
@@ -70,7 +51,7 @@
                         android:layout_weight="1"
                         android:fontFamily="serif"
                         android:gravity="center_vertical"
-                        android:text="Food"
+                        android:text="Add New Bill"
                         android:textAlignment="center"
                         android:textColor="#520f9b"
                         android:textSize="15sp"
@@ -86,7 +67,7 @@
                 app:cardElevation="5dp"
                 app:cardCornerRadius="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginBottom="15dp"
                 android:layout_width="match_parent"
@@ -113,7 +94,7 @@
                         android:layout_weight="1"
                         android:fontFamily="serif"
                         android:gravity="center_vertical"
-                        android:text="Member"
+                        android:text="All Users Bill"
                         android:textAlignment="center"
                         android:textColor="#520f9b"
                         android:textSize="15sp"
@@ -128,7 +109,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp">
@@ -165,7 +146,7 @@
                         android:layout_weight="1"
                         android:fontFamily="serif"
                         android:gravity="center_vertical"
-                        android:text="Bill"
+                        android:text="Transaction Log"
                         android:textAlignment="center"
                         android:textColor="#520f9b"
                         android:textSize="15sp"
@@ -209,7 +190,7 @@
                         android:layout_weight="1"
                         android:fontFamily="serif"
                         android:gravity="center_vertical"
-                        android:text="Branch"
+                        android:text="Monthy Bill Upadte"
                         android:textAlignment="center"
                         android:textColor="#520f9b"
                         android:textSize="15sp"
@@ -219,9 +200,10 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
+
         </LinearLayout>
+
     </LinearLayout>
-
-
 
 </LinearLayout>

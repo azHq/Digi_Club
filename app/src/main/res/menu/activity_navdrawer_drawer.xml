@@ -19,12 +19,12 @@
             android:title="Branches" />
         <item
             android:id="@+id/Food"
-            android:icon="@drawable/ic_apps"
+            android:icon="@drawable/ic_local_cafe_black_24dp"
             android:title="Food" />
         <item
             android:id="@+id/bill"
             android:icon="@drawable/ic_apps"
-            android:title="Bill" />
+            android:title="Generate Bill" />
     </group>
 
     <item android:title="Community">

@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus.digi_club.Admin.Home;
+import com.example.asus.digi_club.UserPanel.Navdrawer;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -82,18 +83,25 @@ public class SignIn extends AppCompatActivity {
                             String[] str=response.toString().split("-");
                             Toast.makeText(getApplicationContext(),"Sign Up Successfully", Toast.LENGTH_SHORT).show();
 
-                            User user = new User(str[1],str[2],null,Email,Password);
-                            SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+
                             finish();
                             if(str[2].contains("user")){
+                                User user = new User(str[1],str[2],null,Email,Password);
+                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                 startActivity(new Intent(getApplicationContext(), Navdrawer.class));
                             }
                             else if(str[2].contains("super")){
-
+                                String branch_id=str[3].replace("}","").replace("\"","");
+                                String id=str[1].replace("\"","");
+                                User user = new User(id,str[2],null,Email,Password,Integer.parseInt(branch_id));
+                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                 startActivity(new Intent(getApplicationContext(), Home.class));
                             }
                             else if(str[2].contains("sub_admin")){
-
+                                String branch_id=str[3].replace("}","").replace("\"","");
+                                String id=str[1].replace("\"","");
+                                User user = new User(id,str[2],null,Email,Password,Integer.parseInt(branch_id));
+                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                 startActivity(new Intent(getApplicationContext(), com.example.asus.digi_club.Admin.Sub_Admin.Home.class));
                             }
 

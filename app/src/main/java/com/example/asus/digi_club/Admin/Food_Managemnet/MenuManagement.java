@@ -30,6 +30,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.asus.digi_club.Constraints;
 import com.example.asus.digi_club.DatabaseConnector;
 import com.example.asus.digi_club.R;
+import com.example.asus.digi_club.SharedPrefManager;
+import com.example.asus.digi_club.User;
 import com.example.asus.digi_club.VolleySingleton;
 
 import org.json.JSONArray;
@@ -43,7 +45,8 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MenuManagement extends AppCompatActivity {
-
+    SharedPrefManager sharedPrefManager;
+    User user;
     Toolbar toolbar;
     RecyclerView recyclerView;
     ProgressDialog progressDialog;
@@ -51,11 +54,16 @@ public class MenuManagement extends AppCompatActivity {
     Button delete;
     boolean itemdelete=false;
     boolean update=false;
+    int branch_id;
     ArrayList<FoodItemInfo[]> foodItemInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_management);
+
+        sharedPrefManager= SharedPrefManager.getInstance(getApplicationContext());
+        user=sharedPrefManager.getUser();
+        branch_id=user.getBranch_id();
 
         recyclerView=findViewById(R.id.recycle);
         delete=findViewById(R.id.delete);
@@ -341,6 +349,7 @@ public class MenuManagement extends AppCompatActivity {
                 params.put("price",dept);
                 params.put("quantity",quantity);
                 params.put("image_path",image_path);
+                params.put("branch_id",branch_id+"");
                 return params;
             }
         };
@@ -406,15 +415,18 @@ public class MenuManagement extends AppCompatActivity {
 
 
         progressDialog.show();
+
+        JSONArray jsonArray=new JSONArray();
+        jsonArray.put(branch_id);
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
                 Request.Method.POST,
                 Constraints.GETFOODITEMS,
-                null,
+                jsonArray,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                         foodItemInfo=new ArrayList<>();
+                        foodItemInfo=new ArrayList<>();
                         for(int i=0;i<response.length();i++){
                             FoodItemInfo[] foodItem=new FoodItemInfo[2];
                             JSONObject student = null;
@@ -466,7 +478,15 @@ public class MenuManagement extends AppCompatActivity {
                 }
 
 
-        );
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("User-agent", System.getProperty("http.agent"));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
 
 
